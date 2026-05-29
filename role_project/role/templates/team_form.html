@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-3">
+
+```
+<!-- PAGE HEADER -->
+
+<div class="mb-4">
+
+    <h1 class="fw-bold mb-1">
+        {{ title }}
+    </h1>
+
+    <p class="text-muted mb-0">
+        Fill in the required information below.
+    </p>
+
+</div>
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-7 col-xl-6">
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+            <!-- CARD HEADER -->
+
+            <div class="card-header bg-white border-0 px-4 pt-4">
+
+                <h4 class="fw-semibold mb-1">
+                    Form Details
+                </h4>
+
+                <small class="text-muted">
+                    Complete all required fields carefully
+                </small>
+
+            </div>
+
+            <!-- FORM BODY -->
+
+            <div class="card-body p-4">
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    {% for field in form %}
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                {{ field.label }}
+
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.help_text %}
+
+                                <small class="text-muted d-block mt-2">
+                                    {{ field.help_text }}
+                                </small>
+
+                            {% endif %}
+
+                            {% if field.errors %}
+
+                                <div class="text-danger small mt-2">
+
+                                    {{ field.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                    <!-- BUTTONS -->
+
+                    <div class="d-flex gap-3 pt-2">
+
+                        <button class="btn btn-dark px-4 py-2 rounded-3"
+                                type="submit">
+
+                            Save Changes
+
+                        </button>
+
+                        <a class="btn btn-light border px-4 py-2 rounded-3"
+                           href="{% url 'admin_dashboard' %}">
+
+                            Cancel
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete User{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+
+```
+<div class="col-lg-5 col-md-7">
+
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+        <!-- TOP WARNING SECTION -->
+
+        <div class="bg-danger text-white p-4 text-center">
+
+            <div class="mb-3" style="font-size: 3rem;">
+                ⚠
+            </div>
+
+            <h2 class="fw-bold mb-2">
+                Delete User
+            </h2>
+
+            <p class="mb-0 opacity-75">
+                This action cannot be undone.
+            </p>
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <div class="card-body p-5">
+
+            <div class="text-center mb-4">
+
+                <h4 class="fw-semibold mb-3">
+                    {{ target_user.username }}
+                </h4>
+
+                <p class="text-muted mb-0">
+                    You are about to permanently remove this user account
+                    from the system.
+                </p>
+
+            </div>
+
+            <!-- USER DETAILS -->
+
+            <div class="bg-light rounded-4 p-4 mb-4">
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted">Username</span>
+                    <span class="fw-semibold">
+                        {{ target_user.username }}
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted">Email</span>
+                    <span class="fw-semibold">
+                        {{ target_user.email|default:"-" }}
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted">Role</span>
+                    <span class="fw-semibold">
+                        {{ target_user.get_role_display }}
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <span class="text-muted">Team</span>
+                    <span class="fw-semibold">
+                        {{ target_user.team.name|default:"Unassigned" }}
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- ACTIONS -->
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="d-grid gap-3">
+
+                    <button class="btn btn-danger btn-lg rounded-3"
+                            type="submit">
+
+                        Permanently Delete User
+
+                    </button>
+
+                    <a class="btn btn-light border rounded-3"
+                       href="{% url 'dashboard' %}">
+
+                        Cancel and Return
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

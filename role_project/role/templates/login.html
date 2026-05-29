@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="row min-vh-100 align-items-center">
+
+    <!-- LEFT SIDE -->
+
+    <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-center px-5">
+
+        <div class="pe-lg-5">
+
+            <span class="badge bg-dark px-3 py-2 mb-4 rounded-pill">
+                Team Management System
+            </span>
+
+            <h1 class="display-4 fw-bold mb-4">
+                Manage Teams
+                <br>
+                With Simplicity
+            </h1>
+
+            <p class="lead text-muted mb-5">
+
+                Secure role-based management platform for admins,
+                team leaders, and team members.
+
+            </p>
+
+            <div class="d-flex gap-4 flex-wrap">
+
+                <div>
+                    <h3 class="fw-bold mb-1">100%</h3>
+                    <p class="text-muted mb-0">Secure Access</p>
+                </div>
+
+                <div>
+                    <h3 class="fw-bold mb-1">Role-Based</h3>
+                    <p class="text-muted mb-0">Authorization</p>
+                </div>
+
+                <div>
+                    <h3 class="fw-bold mb-1">Simple</h3>
+                    <p class="text-muted mb-0">Team Control</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="col-lg-6">
+
+        <div class="d-flex justify-content-center align-items-center">
+
+            <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5"
+                 style="width: 100%; max-width: 450px;">
+
+                <div class="text-center mb-5">
+
+                    <h2 class="fw-bold mb-2">
+                        Welcome Back
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Login to continue to your dashboard
+                    </p>
+
+                </div>
+
+                {% if form.errors %}
+
+                    <div class="alert alert-danger rounded-3">
+
+                        Invalid username or password.
+
+                    </div>
+
+                {% endif %}
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <!-- USERNAME -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Username
+                        </label>
+
+                        {{ form.username }}
+
+                    </div>
+
+                    <!-- PASSWORD -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Password
+                        </label>
+
+                        {{ form.password }}
+
+                    </div>
+
+                    <!-- BUTTON -->
+
+                    <button type="submit"
+                            class="btn btn-dark w-100 py-3 rounded-3">
+
+                        Login
+
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-4">
+
+                    <small class="text-muted">
+                        Secure Team Access Portal
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

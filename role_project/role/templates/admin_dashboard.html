@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+
+<!-- HEADER -->
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+
+    <div>
+        <h1 class="fw-bold mb-1">Admin Dashboard</h1>
+        <p class="text-muted mb-0">
+            Manage teams, leaders, and members from a centralized dashboard.
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a class="btn btn-light border shadow-sm px-4" href="{% url 'create_team' %}">
+            + Create Team
+        </a>
+
+        <a class="btn btn-dark shadow-sm px-4" href="{% url 'create_user' %}">
+            + Create User
+        </a>
+    </div>
+
+</div>
+
+<!-- STATS -->
+<div class="row g-4 mb-4">
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body">
+                <p class="text-muted mb-2">Total Teams</p>
+                <h2 class="fw-bold mb-0">{{ teams.count }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body">
+                <p class="text-muted mb-2">Total Users</p>
+                <h2 class="fw-bold mb-0">{{ users.count }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body">
+                <p class="text-muted mb-2">Active Leaders</p>
+                <h2 class="fw-bold mb-0">
+                    {{ leaders_count }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-4">
+
+    <!-- TEAMS SECTION -->
+    <div class="col-lg-4">
+
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <h4 class="fw-semibold mb-0">Teams</h4>
+            </div>
+
+            <div class="card-body pt-3">
+
+                {% for team in teams %}
+
+                <div class="d-flex justify-content-between align-items-center p-3 mb-3 rounded-3 bg-light">
+
+                    <div>
+                        <h6 class="mb-1 fw-semibold">
+                            {{ team.name }}
+                        </h6>
+
+                        <small class="text-muted">
+                            Team Workspace
+                        </small>
+                    </div>
+
+                    <span class="badge bg-dark rounded-pill px-3 py-2">
+                        {{ team.customuser_set.count }} Users
+                    </span>
+
+                </div>
+
+                {% empty %}
+
+                <div class="text-center py-5">
+                    <p class="text-muted mb-0">
+                        No teams created yet.
+                    </p>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- USERS TABLE -->
+    <div class="col-lg-8">
+
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h4 class="fw-semibold mb-1">Users</h4>
+                    <small class="text-muted">
+                        All registered system users
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="table align-middle mb-0">
+
+                    <thead class="table-light">
+
+                    <tr>
+                        <th class="ps-4">Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Team</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for account in users %}
+
+                    <tr>
+
+                        <td class="ps-4 fw-semibold">
+                            {{ account.username }}
+                        </td>
+
+                        <td>
+                            {{ account.email|default:'-' }}
+                        </td>
+
+                        <td>
+
+                            {% if account.role == 'admin' %}
+                                <span class="badge bg-dark px-3 py-2">
+                                    Admin
+                                </span>
+
+                            {% elif account.role == 'leader' %}
+                                <span class="badge bg-primary px-3 py-2">
+                                    Leader
+                                </span>
+
+                            {% else %}
+                                <span class="badge bg-secondary px-3 py-2">
+                                    Member
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ account.team.name|default:'Unassigned' }}
+                        </td>
+
+                        <td class="text-end pe-4">
+
+                            <a class="btn btn-sm btn-outline-dark rounded-pill px-3"
+                               href="{% url 'assign_team' account.id %}">
+                                Assign
+                            </a>
+
+                            <a class="btn btn-sm btn-danger rounded-pill px-3"
+                               href="{% url 'delete_user' account.id %}">
+                                Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            No users found.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}
